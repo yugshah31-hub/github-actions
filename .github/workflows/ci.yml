@@ -1,0 +1,42 @@
+name: CI Practical
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "Enter your name"
+        required: true
+        default: "Yug"
+      num:
+        description: "Enter a number"
+        required: true
+        default: "6"
+
+jobs:
+  practical:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Example 1 - Basic Command
+        run: |
+          echo "Hello from GitHub Actions"
+          echo "CI Pipeline executed successfully"
+
+      - name: Example 2 - Runtime Parameters
+        env:
+          USERNAME: ${{ inputs.username }}
+          NUM: ${{ inputs.num }}
+        run: |
+          echo "Welcome, $USERNAME"
+          echo "Your number is $NUM"
+
+      - name: Example 3 - Python Program
+        env:
+          NUM: ${{ inputs.num }}
+        run: |
+          python3 -c '
+          n = int(__import__("os").environ["NUM"])
+          print("Multiplication table of", n)
+          for i in range(1, 11):
+              print(f"{n} x {i} = {n * i}")
+          '
